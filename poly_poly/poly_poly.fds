@@ -1,0 +1,102 @@
+
+&HEAD   CHID = 'poly_poly',  TITLE = 'A FDS pyrolysis model of the poly_poly case' /
+
+&TIME   T_END = 200.0    DT = 0.5    WALL_INCREMENT = 1      /
+
+&MESH   IJK = 4,4,4     XB = -1.5,1.5,-1.5,1.5,0,4 /
+
+&MISC   SOLID_PHASE_ONLY=.TRUE. Y_O2_INFTY = 0.01 TMPA=27/
+
+!&RADI RADIATION=.FALSE. /
+&DUMP   DT_DEVC=0.5/
+
+&SPEC ID='OFF-GAS' /
+
+&VENT   XB=-1,1,-0.5,0.5,0.0,0.0, SURF_ID='VIRGIN' /
+
+&SURF   ID = 'VIRGIN'
+        COLOR = 'RED'
+        STRETCH_FACTOR = 1.
+        CELL_SIZE_FACTOR = 0.1
+        HEAT_TRANSFER_COEFFICIENT = 10.
+        MATL_ID = 'COMP1','COMP2'
+        THICKNESS = 0.012,0.025
+        EXTERNAL_FLUX = 25.
+        BACKING = 'INSULATED' /
+
+&MATL   ID                    = 'COMP1'
+        EMISSIVITY            = 1.0
+        DENSITY               = 1683.0
+        CONDUCTIVITY_RAMP     = 'k1_ramp'
+        SPECIFIC_HEAT_RAMP    = 'c1_ramp'
+        N_REACTIONS           = 1
+        A(1)                  = 5.0E28
+        E(1)                  = 3.6E5
+        N_S(1)                = 4.6
+        NU_SPEC               = 0.27
+        SPEC_ID               = 'OFF-GAS'
+        MATL_ID               = 'CHAR'
+        NU_MATL               = 0.73
+        HEAT_OF_REACTION      = 500.0 /
+
+&RAMP   ID = 'k1_ramp', T = 27.,  F = 0.314154 /
+&RAMP   ID = 'k1_ramp', T = 127., F = 0.319676 /
+&RAMP   ID = 'k1_ramp', T = 227., F = 0.3240167 /
+&RAMP   ID = 'k1_ramp', T = 327., F = 0.3271762 /
+&RAMP   ID = 'k1_ramp', T = 427., F = 0.3291543 /
+&RAMP   ID = 'k1_ramp', T = 527., F = 0.3299512 /
+
+&RAMP   ID = 'c1_ramp', T = 27.,  F = 1.0803802 /
+&RAMP   ID = 'c1_ramp', T = 127., F = 1.0888168 /
+&RAMP   ID = 'c1_ramp', T = 227., F = 1.093075 /
+&RAMP   ID = 'c1_ramp', T = 327., F = 1.0931548 /
+&RAMP   ID = 'c1_ramp', T = 427., F = 1.0890562 /
+&RAMP   ID = 'c1_ramp', T = 527., F = 1.0807792 /
+
+&MATL   ID                    = 'COMP2'
+        EMISSIVITY            = 1.0
+        DENSITY               = 96.
+        CONDUCTIVITY_RAMP     = 'k2_ramp'
+        SPECIFIC_HEAT_RAMP    = 'c2_ramp'
+        N_REACTIONS           = 0 /
+
+&RAMP   ID = 'k2_ramp', T = 27.,  F = 0.0251706 /
+&RAMP   ID = 'k2_ramp', T = 127., F = 0.0424016 /
+&RAMP   ID = 'k2_ramp', T = 227., F = 0.0641646 /
+&RAMP   ID = 'k2_ramp', T = 327., F = 0.0904596 /
+&RAMP   ID = 'k2_ramp', T = 427., F = 0.1212866 /
+&RAMP   ID = 'k2_ramp', T = 527., F = 0.1566456 /
+
+&RAMP   ID = 'c2_ramp', T = 27.,  F = 0.787493 /
+&RAMP   ID = 'c2_ramp', T = 127., F = 0.827232 /
+&RAMP   ID = 'c2_ramp', T = 227., F = 0.864625 /
+&RAMP   ID = 'c2_ramp', T = 327., F = 0.899672 /
+&RAMP   ID = 'c2_ramp', T = 427., F = 0.932373 /
+&RAMP   ID = 'c2_ramp', T = 527., F = 0.962728 /
+
+&MATL   ID                    = 'CHAR'
+        EMISSIVITY            = 1.0
+        DENSITY               = 1235.
+        CONDUCTIVITY_RAMP     = 'k3_ramp'
+        SPECIFIC_HEAT_RAMP    = 'c3_ramp' /
+
+&RAMP   ID = 'k3_ramp', T = 27.,  F = 0.102541 /
+&RAMP   ID = 'k3_ramp', T = 127., F = 0.130841 /
+&RAMP   ID = 'k3_ramp', T = 227., F = 0.159141 /
+&RAMP   ID = 'k3_ramp', T = 327., F = 0.187441 /
+&RAMP   ID = 'k3_ramp', T = 427., F = 0.215741 /
+&RAMP   ID = 'k3_ramp', T = 527., F = 0.244041 /
+
+&RAMP   ID = 'c3_ramp', T = 27.,  F = 1.048 /
+&RAMP   ID = 'c3_ramp', T = 127., F = 1.0739 /
+&RAMP   ID = 'c3_ramp', T = 227., F = 1.0998 /
+&RAMP   ID = 'c3_ramp', T = 327., F = 1.1257 /
+&RAMP   ID = 'c3_ramp', T = 427., F = 1.1516 /
+&RAMP   ID = 'c3_ramp', T = 527., F = 1.1775 /
+
+&DEVC XYZ = 0,0,0,IOR=3, QUANTITY = 'WALL TEMPERATURE', ID = 'Front Temp'/
+&DEVC XYZ = 0,0,0,IOR=3, QUANTITY = 'INSIDE WALL TEMPERATURE', DEPTH = 0.012 /
+&DEVC XYZ = 0,0,0,IOR=3, QUANTITY = 'INSIDE WALL TEMPERATURE', DEPTH = 0.036999,
+        ID = 'Back Temp' /
+
+&TAIL /

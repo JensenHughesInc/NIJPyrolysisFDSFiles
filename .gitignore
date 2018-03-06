@@ -1,0 +1,16 @@
+# Add additional ignore files here
+
+# FDS output files should be ignored.  Do not comment out the lines below.
+*.csv
+*.info
+*_git.txt
+*.sf
+*.bf
+*.out
+*.smv
+*.end
+*.s3d
+*.s3d.sz
+*.prt5
+*.gz
+
